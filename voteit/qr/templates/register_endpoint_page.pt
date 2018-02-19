@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="view.macro('arche:templates/base_view.pt', 'arche:templates/inline.pt')"
+  	  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	    i18n:domain="voteit.qr">
+<body>
+
+<tal:actionbar metal:fill-slot="actionbar" />
+
+<div metal:fill-slot="main-content">
+
+	<h2>
+		Configure endpoint
+	</h2>
+
+	<img src="${qr_img_url}" width="400" height="400" class="img-responsive" />
+
+</div>
+</body>
+</html>
