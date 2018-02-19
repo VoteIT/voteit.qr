@@ -13,7 +13,6 @@ requires = (
     'pyramid',
     'voteit.core',
     'typing',
-    'voteit.irl',
     'pyjwt',
     'qrcode',
 )
@@ -42,6 +41,6 @@ setup(
     test_suite="voteit.qr",
     entry_points="""
         [fanstatic.libraries]
-        vote_groups_lib = voteit.vote_groups.fanstaticlib:vote_groups_lib
+        voteit_qr_lib = voteit.qr.fanstaticlib:qr_lib
         """,
 )
