@@ -34,7 +34,7 @@ class PresenceQR(object):
     def __init__(self, context):
         self.context = context
 
-    def _generate_random_secret(self, length=40):
+    def _generate_random_secret(self, length=20):
         # type: (int) -> unicode
         chars = string.ascii_letters + string.digits
         return ''.join(random.choice(chars) for x in range(length))

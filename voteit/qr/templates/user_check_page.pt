@@ -13,32 +13,36 @@
 	 data-checkin-area="${request.resource_url(context, 'user_check_page')}"
 	 metal:fill-slot="main-content">
 
-	<h2>
-		<span i18n:translate="">Your status: </span>
-		<span tal:condition="checked_in"
-			  class="label label-success"
-		i18n:translate="">
+	<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+		<button tal:condition="checked_in"
+			  class="btn btn-success"
+			  i18n:translate="">
 			Checked in
-		</span>
-		<span tal:condition="not checked_in"
-			  class="label label-warning"
-		i18n:translate="">
+		</button>
+		<button tal:condition="not checked_in"
+			  class="btn btn-warning"
+			  i18n:translate="">
 			Checked out
-		</span>
-
-		<a href="${request.resource_url(context, 'user_check_page')}"
-			class="btn btn-default"
-			i18n:translate="">Recheck status</a>
-	</h2>
-	<p tal:condition="not checked_in" i18n:translate="checkin_explanation">
-		Show this image to the check-in station before entering the meeting premises.
-		It will confirm your physical presence.
-	</p>
-	<p tal:condition="checked_in" i18n:translate="checkout_explanation">
-		To check out, show this image the same way you did when you entered the meeting.
-	</p>
-
-	<img src="${qr_img_url}" width="400" height="400" class="img-responsive" />
+		</button>
+		<a data-open-modal href="${request.resource_url(context, 'user_check_page')}"
+		   class="btn btn-default"
+		   i18n:translate="">Recheck status</a>
+	</div>
+	<div class="modal-body">
+		<img src="${qr_img_url}" width="400" height="400" class="img-responsive" />
+	</div>
+	<div class="modal-footer">
+		<p tal:condition="not checked_in" i18n:translate="checkin_explanation">
+			Show this image to the check-in station before entering the meeting premises.
+			It will confirm your physical presence.
+		</p>
+		<p tal:condition="checked_in" i18n:translate="checkout_explanation">
+			To check out, show this image the same way you did when you entered the meeting.
+		</p>
+	</div>
 
 </div>
 </body>

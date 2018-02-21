@@ -76,14 +76,14 @@ class QRViews(BaseView):
         response = {}
         if not self.request.has_permission(security.VIEW, context=self.context, for_userid=userid):
             raise HTTPForbidden("Not part of this meeting")
-        #Check actions against what's being sent?
+        # Check actions against what's being sent?
         translate = self.request.localizer.translate
         if userid not in self.presence_qr:
             response['message'] = translate(_("You've checked in as ${userid}",
                                               mapping={'userid': userid}))
             self.presence_qr.checkin(userid, self.request)
         elif userid in self.presence_qr:
-            #Essentially an action was performed
+            # Essentially an action was performed
             value = payload.get('value', None)
             if value:
                 if value == 'yes':
@@ -237,8 +237,8 @@ def meeting_nav_link(context, request, va, **kw):
         title = _("Check-out")
     else:
         title = _("Check-in")
-    url = request.resource_url(request.meeting, 'user_check_page')
-    return """<li><a href="%s">%s</a></li>""" % (url, request.localizer.translate(title))
+    url = request.resource_path(request.meeting, 'user_check_page')
+    return """<li><a data-open-modal href="%s">%s</a></li>""" % (url, request.localizer.translate(title))
 
 
 def includeme(config):
