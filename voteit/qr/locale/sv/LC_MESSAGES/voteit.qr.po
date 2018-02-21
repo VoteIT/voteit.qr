@@ -1,0 +1,126 @@
+#: voteit/qr/schemas.py:19
+msgid "No UserID"
+msgstr ""
+
+#: voteit/qr/schemas.py:23
+msgid "That user doesn't have permission to view this meeting."
+msgstr ""
+
+#: voteit/qr/schemas.py:30
+msgid "Enable QR code checkin?"
+msgstr ""
+
+#: voteit/qr/schemas.py:38
+msgid "UserID"
+msgstr ""
+
+#: voteit/qr/views.py:82
+#, python-format
+msgid "You've checked in as ${userid}"
+msgstr ""
+
+#: voteit/qr/views.py:91 voteit/qr/views.py:206
+#: voteit/qr/templates/user_check_page.pt:25
+msgid "Checked out"
+msgstr ""
+
+#: voteit/qr/views.py:93
+msgid "OK, you're still checked in"
+msgstr ""
+
+#: voteit/qr/views.py:95
+#, python-format
+msgid "${act} is not a valid action"
+msgstr ""
+
+#: voteit/qr/views.py:99
+msgid "You're checked in. Do you want to exit and check out?"
+msgstr ""
+
+#: voteit/qr/views.py:159
+msgid "QR settings"
+msgstr ""
+
+#: voteit/qr/views.py:184
+msgid "Manual checkin"
+msgstr ""
+
+#: voteit/qr/views.py:186 voteit/qr/views.py:239
+msgid "Check-in"
+msgstr ""
+
+#: voteit/qr/views.py:187 voteit/qr/views.py:237
+msgid "Check-out"
+msgstr ""
+
+#: voteit/qr/views.py:188
+msgid "Status"
+msgstr ""
+
+#: voteit/qr/views.py:198 voteit/qr/templates/user_check_page.pt:20
+msgid "Checked in"
+msgstr ""
+
+#: voteit/qr/views.py:200
+msgid "Already checked in"
+msgstr ""
+
+#: voteit/qr/views.py:208
+msgid "Already checked out"
+msgstr ""
+
+#: voteit/qr/views.py:214
+msgid "User is checked in"
+msgstr ""
+
+#: voteit/qr/views.py:216
+msgid "User is checked out"
+msgstr ""
+
+#: voteit/qr/views.py:250
+msgid "QR codes"
+msgstr ""
+
+#: voteit/qr/views.py:251
+msgid "Checkin with QR codes."
+msgstr ""
+
+#: voteit/qr/views.py:258
+msgid "Settings"
+msgstr ""
+
+#: voteit/qr/views.py:264
+msgid "Register endpoint"
+msgstr ""
+
+#: voteit/qr/views.py:270
+msgid "Manual check-in"
+msgstr ""
+
+#: voteit/qr/views.py:276
+msgid "Show checked in users"
+msgstr ""
+
+#: voteit/qr/templates/checked_in_users.pt:13
+msgid "Checked in users"
+msgstr ""
+
+#: voteit/qr/templates/user_check_page.pt:17
+msgid "Your status:"
+msgstr ""
+
+#: voteit/qr/templates/user_check_page.pt:31
+msgid "Recheck status"
+msgstr ""
+
+#. Default: Show this image to the check-in station before entering the meeting
+#. premises. It will confirm your physical presence.
+#: voteit/qr/templates/user_check_page.pt:33
+msgid "checkin_explanation"
+msgstr ""
+
+#. Default: To check out, show this image the same way you did when you entered
+#. the meeting.
+#: voteit/qr/templates/user_check_page.pt:37
+msgid "checkout_explanation"
+msgstr ""
