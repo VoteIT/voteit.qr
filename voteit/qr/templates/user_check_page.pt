@@ -32,7 +32,7 @@
 		   i18n:translate="">Recheck status</a>
 	</div>
 	<div class="modal-body">
-		<img src="${qr_img_url}" width="400" height="400" class="img-responsive" />
+		<img src="${qr_img_url}" width="1000" height="1000" class="img-responsive" />
 	</div>
 	<div class="modal-footer">
 		<p tal:condition="not checked_in" i18n:translate="checkin_explanation">
