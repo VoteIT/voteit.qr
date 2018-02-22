@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 14:43+0100\n"
-"PO-Revision-Date: 2018-02-21 14:35+0000\n"
+"PO-Revision-Date: 2018-02-22 13:48+0000\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -32,12 +32,11 @@ msgstr "AnvändarID"
 #: voteit/qr/views.py:76
 #, python-format
 msgid "Handling checkins for VoteIT-meeting ${name}"
-msgstr ""
+msgstr "Hanterar incheckningar för ${name} (VoteIT)"
 
 #: voteit/qr/views.py:79
-#, fuzzy
 msgid "Please scan QR code to check in."
-msgstr "Slå på QR-kod checkin?"
+msgstr "Vänligen visa QR-kod för att checka in."
 
 #: voteit/qr/views.py:98
 #, python-format
@@ -59,17 +58,17 @@ msgid "${act} is not a valid action"
 msgstr "${act} är inte en giltig handling"
 
 #: voteit/qr/views.py:115
-#, fuzzy, python-format
+#, python-format
 msgid "Hello ${userid}. You're checked in. Do you want to exit and check out?"
-msgstr "Du är incheckad. Vill du avsluta och checka ut?"
+msgstr "Hej ${userid}. Du är incheckad. Vill du checka ut?"
 
 #: voteit/qr/views.py:118
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #: voteit/qr/views.py:119
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: voteit/qr/views.py:176
 msgid "QR settings"
