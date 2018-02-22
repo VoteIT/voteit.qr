@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-02-21 14:54+0100\n"
+"POT-Creation-Date: 2018-02-22 10:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgid "You've checked in as ${userid}"
 msgstr ""
 
 #: ./voteit/qr/views.py:91 ./voteit/qr/views.py:206
-#: ./voteit/qr/templates/user_check_page.pt:25
+#: ./voteit/qr/templates/user_check_page.pt:27
 msgid "Checked out"
 msgstr ""
 
@@ -75,7 +75,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ./voteit/qr/views.py:198 ./voteit/qr/templates/user_check_page.pt:20
+#: ./voteit/qr/views.py:198 ./voteit/qr/templates/user_check_page.pt:22
 msgid "Checked in"
 msgstr ""
 
@@ -123,22 +123,18 @@ msgstr ""
 msgid "Checked in users"
 msgstr ""
 
-#: ./voteit/qr/templates/user_check_page.pt:17
-msgid "Your status:"
-msgstr ""
-
-#: ./voteit/qr/templates/user_check_page.pt:31
+#: ./voteit/qr/templates/user_check_page.pt:32
 msgid "Recheck status"
 msgstr ""
 
 #. Default: Show this image to the check-in station before entering the meeting
 #. premises. It will confirm your physical presence.
-#: ./voteit/qr/templates/user_check_page.pt:33
+#: ./voteit/qr/templates/user_check_page.pt:38
 msgid "checkin_explanation"
 msgstr ""
 
 #. Default: To check out, show this image the same way you did when you entered
 #. the meeting.
-#: ./voteit/qr/templates/user_check_page.pt:37
+#: ./voteit/qr/templates/user_check_page.pt:42
 msgid "checkout_explanation"
 msgstr ""
