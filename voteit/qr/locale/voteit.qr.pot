@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-02-22 10:07+0100\n"
+"POT-Creation-Date: 2018-02-22 14:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,90 +32,108 @@ msgstr ""
 msgid "UserID"
 msgstr ""
 
-#: ./voteit/qr/views.py:82
+#: ./voteit/qr/views.py:76
+#, python-format
+msgid "Handling checkins for VoteIT-meeting ${name}"
+msgstr ""
+
+#: ./voteit/qr/views.py:79
+msgid "Please scan QR code to check in."
+msgstr ""
+
+#: ./voteit/qr/views.py:98
 #, python-format
 msgid "You've checked in as ${userid}"
 msgstr ""
 
-#: ./voteit/qr/views.py:91 ./voteit/qr/views.py:206
+#: ./voteit/qr/views.py:107 ./voteit/qr/views.py:223
 #: ./voteit/qr/templates/user_check_page.pt:27
 msgid "Checked out"
 msgstr ""
 
-#: ./voteit/qr/views.py:93
+#: ./voteit/qr/views.py:109
 msgid "OK, you're still checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:95
+#: ./voteit/qr/views.py:111
 #, python-format
 msgid "${act} is not a valid action"
 msgstr ""
 
-#: ./voteit/qr/views.py:99
-msgid "You're checked in. Do you want to exit and check out?"
+#: ./voteit/qr/views.py:115
+#, python-format
+msgid "Hello ${userid}. You're checked in. Do you want to exit and check out?"
 msgstr ""
 
-#: ./voteit/qr/views.py:159
+#: ./voteit/qr/views.py:118
+msgid "No"
+msgstr ""
+
+#: ./voteit/qr/views.py:119
+msgid "Yes"
+msgstr ""
+
+#: ./voteit/qr/views.py:176
 msgid "QR settings"
 msgstr ""
 
-#: ./voteit/qr/views.py:184
+#: ./voteit/qr/views.py:201
 msgid "Manual checkin"
 msgstr ""
 
-#: ./voteit/qr/views.py:186 ./voteit/qr/views.py:239
+#: ./voteit/qr/views.py:203 ./voteit/qr/views.py:256
 msgid "Check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:187 ./voteit/qr/views.py:237
+#: ./voteit/qr/views.py:204 ./voteit/qr/views.py:254
 msgid "Check-out"
 msgstr ""
 
-#: ./voteit/qr/views.py:188
+#: ./voteit/qr/views.py:205
 msgid "Status"
 msgstr ""
 
-#: ./voteit/qr/views.py:198 ./voteit/qr/templates/user_check_page.pt:22
+#: ./voteit/qr/views.py:215 ./voteit/qr/templates/user_check_page.pt:22
 msgid "Checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:200
+#: ./voteit/qr/views.py:217
 msgid "Already checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:208
+#: ./voteit/qr/views.py:225
 msgid "Already checked out"
 msgstr ""
 
-#: ./voteit/qr/views.py:214
+#: ./voteit/qr/views.py:231
 msgid "User is checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:216
+#: ./voteit/qr/views.py:233
 msgid "User is checked out"
 msgstr ""
 
-#: ./voteit/qr/views.py:250
+#: ./voteit/qr/views.py:267
 msgid "QR codes"
 msgstr ""
 
-#: ./voteit/qr/views.py:251
+#: ./voteit/qr/views.py:268
 msgid "Checkin with QR codes."
 msgstr ""
 
-#: ./voteit/qr/views.py:258
+#: ./voteit/qr/views.py:275
 msgid "Settings"
 msgstr ""
 
-#: ./voteit/qr/views.py:264
+#: ./voteit/qr/views.py:281
 msgid "Register endpoint"
 msgstr ""
 
-#: ./voteit/qr/views.py:270
+#: ./voteit/qr/views.py:287
 msgid "Manual check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:276
+#: ./voteit/qr/views.py:293
 msgid "Show checked in users"
 msgstr ""
 
