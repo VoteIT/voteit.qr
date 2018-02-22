@@ -76,7 +76,7 @@ class QRViews(BaseView):
                 'message': translate(_('Handling checkins for VoteIT-meeting ${name}',
                                        mapping={'name': self.context.title})),
                 'config': {
-                    'default_text': _('Please scan QR code to check in.'),
+                    'default_text': translate(_('Please scan QR code to check in.')),
                     'text_color': '#0a243d',  # VoteIT dark blue TODO: import from somewhere?
                     'text_color_default': '#aaaaaa',  # Light grey
                     'text_font': ('Arial', 20, 'bold'),  # Family, size, style
@@ -115,8 +115,8 @@ class QRViews(BaseView):
                     'text': translate(_("Hello ${userid}. You're checked in. Do you want to exit and check out?",
                                         mapping={'userid': userid})),
                     'buttons': (
-                        ('no', _('No')),
-                        ('yes', _('Yes')),
+                        ('no', translate(_('No'))),
+                        ('yes', translate(_('Yes'))),
                     ),
                     'data': payload,
                 }
