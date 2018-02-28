@@ -214,7 +214,8 @@ class QRManualCheckin(DefaultEditForm):
             self.flash_messages.add(_("User is checked in"), type="success")
         else:
             self.flash_messages.add(_("User is checked out"), type="danger")
-        return HTTPFound(location=self.request.resource_url(self.context, 'manual_checkin'))
+        url = self.request.resource_url(self.context, 'manual_checkin', query={'userid': userid})
+        return HTTPFound(location=url)
 
 
 def _qr_codes_active(context, request, va=None):

@@ -32,12 +32,19 @@ class QRSettingsSchema(colander.Schema):
     #Any other settings?
 
 
+@colander.deferred
+def submitted_userid(node, kw):
+    request = kw['request']
+    return request.params.get('userid', '')
+
+
 class QRManualCheckin(colander.Schema):
     userid = colander.SchemaNode(
         colander.String(),
         title = _("UserID"),
         widget = deferred_autocompleting_userid_widget,
         validator = UserCanViewMeeting,
+        default=submitted_userid,
     )
 
 
