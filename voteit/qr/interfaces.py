@@ -39,6 +39,10 @@ class IPresenceQR(Interface):
         """ Of checked in users """
 
 
+class IPresenceEventLog(Interface):
+    """ Handle logging of check-in/out"""
+
+
 class IPresenceEvent(Interface):
     """ Base for check-in check-out events. If you want to catch all use this."""
     userid = Attribute("UserID")

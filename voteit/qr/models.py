@@ -10,6 +10,9 @@ import jwt
 import qrcode
 from BTrees.OOBTree import OOBTree
 from BTrees.OOBTree import OOSet
+from arche.utils import AttributeAnnotations, utcnow
+from datetime import timedelta
+from persistent.list import PersistentList
 from pyramid.threadlocal import get_current_request
 from qrcode.image.svg import SvgPathImage
 from six import StringIO
@@ -21,7 +24,10 @@ from zope.interface import implementer
 from voteit.qr.events import ParticipantCheckIn
 from voteit.qr.events import ParticipantCheckOut
 from voteit.qr.interfaces import IPresenceQR
-
+from voteit.qr.interfaces import IPresenceEventLog
+from voteit.qr.interfaces import IPresenceEvent
+from voteit.qr.interfaces import IParticipantCheckIn
+from voteit.qr.interfaces import IParticipantCheckOut
 
 logger = getLogger(__name__)
 
@@ -137,5 +143,96 @@ class PresenceQR(object):
         return len(self.userids)
 
 
+@implementer(IPresenceEventLog)
+@adapter(IMeeting)
+class PresenceEventLog(object):
+
+    def __init__(self, context):
+        self.context = context
+
+    @property
+    def data(self):
+        try:
+            return self.context._qr_presence_log
+        except AttributeError:
+            self.context._qr_presence_log = OOBTree()
+            return self.context._qr_presence_log
+
+    def add(self, userid, event_name):
+        # It shouldn't be possible to the same event several times,
+        # so we don't need to check for that
+        if userid not in self:
+            self[userid] = PersistentList()
+        if event_name == 'checkin':
+            self[userid].append({'in': utcnow()})
+        elif event_name == 'checkout':
+            try:
+                self[userid][-1]['in']
+            except (KeyError, IndexError):
+                # in case logging was added while users where checked in, they won't exist
+                return
+            self[userid][-1]['out'] = utcnow()
+        else: # pragma: no coverage
+            raise ValueError("Wrong event name")
+
+    def total(self, userid):
+        """ Check total time, returns timedelta. """
+        if userid not in self:
+            return None
+        total = timedelta()
+        for item in self.get(userid, ()):
+            checkin = item['in']
+            checkout = item.get('out', utcnow())
+            total += checkout - checkin
+        return total
+
+    def first_entry(self, userid):
+        if userid in self:
+            return self[userid][0]['in']
+
+    def last_exit(self, userid):
+        if userid in self:
+            try:
+                return self[userid][-1]['out']
+            except KeyError:
+                pass
+
+    def get(self, userid, default=None):
+        if userid in self:
+            return self[userid]
+        return default
+
+    def __setitem__(self, userid, value):
+        assert isinstance(value, PersistentList)
+        self.data[userid] = value
+
+    def __getitem__(self, userid):
+        return self.data[userid]
+
+    def __contains__(self, userid):
+        return userid in self.data
+
+    def __iter__(self):
+        return iter(self.data.keys())
+
+
+def register_presence_event(event):
+    """ Register events if that's switched on for this meeting. """
+    meeting = event.meeting
+    pqr = IPresenceQR(meeting)
+    if not pqr.settings.get('log_time', None):
+        return
+    if IParticipantCheckOut.providedBy(event):
+        event_name = 'checkout'
+    elif IParticipantCheckIn.providedBy(event):
+        event_name = 'checkin'
+    else:
+        raise TypeError("Subscriber caught wrong event")
+    log = IPresenceEventLog(meeting)
+    log.add(event.userid, event_name)
+
+
 def includeme(config):
     config.registry.registerAdapter(PresenceQR)
+    config.registry.registerAdapter(PresenceEventLog)
+    config.add_subscriber(register_presence_event, IPresenceEvent)

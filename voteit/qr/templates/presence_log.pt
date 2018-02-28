@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="view.macro('arche:templates/base_view.pt', 'arche:templates/inline.pt')"
+  	  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	    i18n:domain="voteit.qr">
+<body>
+
+<tal:actionbar metal:fill-slot="actionbar" />
+
+<div metal:fill-slot="main-content">
+
+	<h2 i18n:translate="">
+		Presence event log
+	</h2>
+
+	<table class="table table-responsive table-striped">
+		<thead>
+			<tr>
+				<th i18n:translate="">Name</th>
+				<th i18n:translate="">UserID</th>
+				<th i18n:translate="">Total time</th>
+				<th i18n:translate="">First entry</th>
+				<th i18n:translate="">Last exit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr tal:repeat="userdata users">
+                <tal:defs define="first_entry log.first_entry(userdata['userid']);
+                                  last_exit log.last_exit(userdata['userid']);">
+                    <td>${userdata['fullname']}</td>
+                    <td>${userdata['userid']}</td>
+                    <td>
+                        ${':'.join(str(userdata['timedelta']).split(':')[:2])}
+                    </td>
+                    <td>${request.dt_handler.format_dt(first_entry)}</td>
+                    <td>
+                        <tal:present condition="not last_exit">
+                            -
+                        </tal:present>
+                        <tal:not_present condition="last_exit">
+                            ${request.dt_handler.format_dt(last_exit)}
+                        </tal:not_present>
+                    </td>
+                </tal:defs>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

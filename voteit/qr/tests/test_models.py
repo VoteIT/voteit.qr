@@ -1,12 +1,16 @@
 from unittest import TestCase
 
 from BTrees.OOBTree import OOBTree
+from datetime import datetime, timedelta
+
+from persistent.list import PersistentList
 from pyramid import testing
 from six import string_types
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 from voteit.qr.interfaces import IPresenceQR
+from voteit.qr.interfaces import IPresenceEventLog
 from voteit.qr.interfaces import IParticipantCheckIn
 from voteit.qr.interfaces import IParticipantCheckOut
 
@@ -87,3 +91,48 @@ class PresenceQRTests(TestCase):
         obj.settings = {1: 1}
         self.assertIsInstance(obj.settings, OOBTree)
         self.assertEqual(dict(obj.settings), {1: 1})
+
+
+class PresenceEventLogTests(TestCase):
+
+    def setUp(self):
+        self.config = testing.setUp()
+
+    def tearDown(self):
+        testing.tearDown()
+
+    @property
+    def _cut(self):
+        from voteit.qr.models import PresenceEventLog
+        return PresenceEventLog
+
+    def _mk_one(self):
+        from voteit.core.models.meeting import Meeting
+        return self._cut(Meeting())
+
+    def test_verify_class(self):
+        self.assertTrue(verifyClass(IPresenceEventLog, self._cut))
+
+    def test_verify_obj(self):
+        self.assertTrue(verifyObject(IPresenceEventLog, self._mk_one()))
+
+    def test_add(self):
+        obj = self._mk_one()
+        obj.add('jane', 'checkin')
+        self.assertIn('jane', obj)
+        obj.add('jane', 'checkout')
+        self.assertEqual(len(obj['jane']), 1)
+        self.assertRaises(ValueError, obj.add, 'jane', 'what')
+
+    def test_total(self):
+        obj = self._mk_one()
+        obj['jane'] = PersistentList()
+        # 3 before lunch
+        obj['jane'].append(
+            {'in': datetime(2018, 2, 28, hour=9, minute=30),
+             'out': datetime(2018, 2, 28, hour=12, minute=30)})
+        # 4 after
+        obj['jane'].append(
+            {'in': datetime(2018, 2, 28, hour=13, minute=30),
+             'out': datetime(2018, 2, 28, hour=17, minute=30)})
+        self.assertEqual(obj.total('jane'), timedelta(hours=7))

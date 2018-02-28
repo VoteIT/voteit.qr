@@ -21,3 +21,15 @@ class ParticipantCheckIn(_BaseEvent):
 @implementer(IParticipantCheckOut)
 class ParticipantCheckOut(_BaseEvent):
     """Participant left."""
+
+    def add(userid, event_name):
+        """ Add an event for userid.
+        """
+
+    def total(userid):
+        """ Total present time, returns timedelta.
+        """
+
+    def get(userid, default=None):
+        """ similar to dict get.
+        """

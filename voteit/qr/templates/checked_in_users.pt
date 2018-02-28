@@ -21,15 +21,15 @@
 	<table class="table table-responsive table-striped">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>UserID</th>
-				<th tal:condition="pns">Number</th>
+				<th i18n:translate="">Name</th>
+				<th i18n:translate="">UserID</th>
+				<th tal:condition="pns" i18n:translate="">Participant no</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr tal:repeat="userdata users">
-				<td>${userdata['userid']}</td>
 				<td>${userdata['fullname']}</td>
+				<td>${userdata['userid']}</td>
 				<td tal:condition="pns">${userdata['pn']}</td>
 			</tr>
 		</tbody>

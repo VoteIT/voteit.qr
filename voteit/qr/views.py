@@ -24,7 +24,7 @@ try:
     use_pns = True
 except ImportError:
     use_pns = False
-from voteit.qr.interfaces import IPresenceQR
+from voteit.qr.interfaces import IPresenceQR, IPresenceEventLog
 from voteit.qr import _
 
 
@@ -149,6 +149,27 @@ class QRViews(BaseView):
         users = sorted(users, key=lambda x: x['fullname'].lower())
         return {'pns': pns, 'users': users}
 
+    @view_config(name='_presence_log',
+                 renderer='voteit.qr:templates/presence_log.pt',
+                 permission=security.MODERATE_MEETING)
+    def presence_log(self):
+        if not self.presence_qr.settings.get('log_time', None):
+            self.flash_messages.add(_("Log not enabled in settings"), type='danger')
+            return HTTPFound(location=self.request.resource_url(self.context))
+        log = IPresenceEventLog(self.context)
+        users = []
+        for userid in log:
+            try:
+                user = self.request.root['users'][userid]
+            except KeyError:
+                user = None
+            row = {'userid': userid,
+                   'fullname': user and user.title or '',
+                   'timedelta': log.total(userid)}
+            users.append(row)
+        users = sorted(users, key=lambda x: x['fullname'].lower())
+        return {'users': users, 'log': log}
+
 
 @view_config(context=IMeeting,
              name="qr_settings",
@@ -170,6 +191,16 @@ class QRSettingsForm(DefaultEditForm):
 
     def save_success(self, appstruct):
         self.presence_qr.active = appstruct.pop('active', False)
+        enable_logging = appstruct.get('log_time', None)
+        checked_in = len(self.presence_qr)
+        if enable_logging and not self.presence_qr.settings.get('log_time', None) and checked_in:
+            self.flash_messages.add(
+                _("logging_enalbed_with_checked_in_warning",
+                  default="${users} have already checked in so their checkouts won't be "
+                          "registered in the log.",
+                  mapping={'users': checked_in}),
+                type='danger'
+            )
         self.presence_qr.settings = appstruct
         self.flash_messages.add(self.default_success, type="success")
         return HTTPFound(location=self.request.resource_url(self.context))
@@ -303,6 +334,12 @@ def includeme(config):
         'control_panel_qr', 'checked_in_users',
         title=_("Show checked in users"),
         view_name='checked_in_users',
+    )
+    config.add_view_action(
+        control_panel_link,
+        'control_panel_qr', 'presence_log',
+        title=_("Presence log"),
+        view_name='_presence_log',
     )
     config.add_view_action(
         meeting_nav_link,

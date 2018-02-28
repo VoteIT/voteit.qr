@@ -29,7 +29,11 @@ class QRSettingsSchema(colander.Schema):
         colander.Bool(),
         title = _("Enable QR code checkin?"),
     )
-    #Any other settings?
+    log_time = colander.SchemaNode(
+        colander.Bool(),
+        title=_("Log time present for all users?"),
+        default=True,
+    )
 
 
 @colander.deferred
