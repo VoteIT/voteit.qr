@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from colander import Schema
 from deform import Button
 from jwt import DecodeError
 from arche.views.base import BaseView
@@ -216,6 +217,32 @@ class QRManualCheckin(DefaultEditForm):
             self.flash_messages.add(_("User is checked out"), type="danger")
         url = self.request.resource_url(self.context, 'manual_checkin', query={'userid': userid})
         return HTTPFound(location=url)
+
+
+@view_config(context=IMeeting,
+             name="_checkout_everyone",
+             renderer="arche:templates/form.pt",
+             permission=security.MODERATE_MEETING)
+class CheckoutEveryoneForm(DefaultEditForm):
+    title = _("Checkout everyone - are you sure?")
+
+    @reify
+    def presence_qr(self):
+        return IPresenceQR(self.context)
+
+    def get_schema(self):
+        return Schema()
+
+    def save_success(self, appstruct):
+        checked_in = tuple(self.presence_qr)
+        for userid in checked_in:
+            self.presence_qr.checkout(userid, request=self.request)
+        msg = _("Checked out ${num} users", mapping={'num': len(checked_in)})
+        self.flash_messages.add(msg, type='success')
+        return HTTPFound(location=self.request.resource_url(self.context, 'checked_in_users'))
+
+    def cancel_success(self, *args):
+        return HTTPFound(location=self.request.resource_url(self.context, 'checked_in_users'))
 
 
 def _qr_codes_active(context, request, va=None):

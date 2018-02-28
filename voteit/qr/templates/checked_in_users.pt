@@ -11,8 +11,12 @@
 <div metal:fill-slot="main-content">
 
 	<h2 i18n:translate="">
-		Checked in users
+		Checked in users (<tal:ts i18n:name="count">${len(users)}</tal:ts>)
+		<a href="${request.resource_url(context, '_checkout_everyone')}"
+		   tal:condition="users and request.is_moderator"
+		   class="btn btn-default pull-right">Checkout all</a>
 	</h2>
+
 
 	<table class="table table-responsive table-striped">
 		<thead>
