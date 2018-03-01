@@ -70,15 +70,31 @@ class QRViews(BaseView):
                  permission=NO_PERMISSION_REQUIRED)
     def receiver(self):
         payload = self.get_payload()
+        translate = self.request.localizer.translate
+
+        if payload.get('action') == 'get_config':
+            body = self.presence_qr.encode({
+                'message': translate(_('Handling checkins for VoteIT-meeting ${name}',
+                                       mapping={'name': self.context.title})),
+                'config': {
+                    'default_text': translate(_('Please scan QR code to check in.')),
+                    'text_color': '#0a243d',  # VoteIT dark blue TODO: import from somewhere?
+                    'text_color_default': '#aaaaaa',  # Light grey
+                    'text_font': ('Arial', 20, 'bold'),  # Family, size, style
+                    'button_colors': {'yes': '#5cb85c', 'no': '#d9534f'},  # Bootstrap colors. TODO: Import?
+                }
+            })
+            return Response(body, content_type=b'application/jwt')
+
         try:
             userid = payload['userid']
         except KeyError:
             raise HTTPBadRequest('Invalid data')
         response = {}
+
         if not self.request.has_permission(security.VIEW, context=self.context, for_userid=userid):
             raise HTTPForbidden("Not part of this meeting")
         # Check actions against what's being sent?
-        translate = self.request.localizer.translate
         if userid not in self.presence_qr:
             response['message'] = translate(_("You've checked in as ${userid}",
                                               mapping={'userid': userid}))
@@ -97,10 +113,11 @@ class QRViews(BaseView):
                                                       mapping={'act': value}))
             else:
                 response['question'] = {
-                    'text': _("You're checked in. Do you want to exit and check out?"),
+                    'text': translate(_("Hello ${userid}. You're checked in. Do you want to exit and check out?",
+                                        mapping={'userid': userid})),
                     'buttons': (
-                        ('no', 'No'),
-                        ('yes', 'Yes'),
+                        ('no', translate(_('No'))),
+                        ('yes', translate(_('Yes'))),
                     ),
                     'data': payload,
                 }
