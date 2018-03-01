@@ -24,7 +24,9 @@ try:
     use_pns = True
 except ImportError:
     use_pns = False
-from voteit.qr.interfaces import IPresenceQR, IPresenceEventLog
+
+from voteit.qr.interfaces import IPresenceQR
+from voteit.qr.interfaces import IPresenceEventLog
 from voteit.qr import _
 
 
@@ -71,13 +73,12 @@ class QRViews(BaseView):
     def receiver(self):
         payload = self.get_payload()
         translate = self.request.localizer.translate
-
         if payload.get('action') == 'get_config':
             body = self.presence_qr.encode({
                 'message': translate(_('Handling checkins for VoteIT-meeting ${name}',
                                        mapping={'name': self.context.title})),
                 'config': {
-                    'default_text': translate(_('Please scan QR code to check in.')),
+                    'default_text': translate(_('Please scan QR code to check in or out')),
                     'text_color': '#0a243d',  # VoteIT dark blue TODO: import from somewhere?
                     'text_color_default': '#aaaaaa',  # Light grey
                     'text_font': ('Arial', 20, 'bold'),  # Family, size, style
@@ -85,16 +86,15 @@ class QRViews(BaseView):
                 }
             })
             return Response(body, content_type=b'application/jwt')
-
         try:
             userid = payload['userid']
         except KeyError:
             raise HTTPBadRequest('Invalid data')
         response = {}
-
         if not self.request.has_permission(security.VIEW, context=self.context, for_userid=userid):
             raise HTTPForbidden("Not part of this meeting")
         # Check actions against what's being sent?
+        # FIXME: Allow checkin event to decide what messages should be sent
         if userid not in self.presence_qr:
             response['message'] = translate(_("You've checked in as ${userid}",
                                               mapping={'userid': userid}))
