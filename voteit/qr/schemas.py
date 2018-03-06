@@ -34,6 +34,10 @@ class QRSettingsSchema(colander.Schema):
         title=_("Log time present for all users?"),
         default=True,
     )
+    assign_pn = colander.SchemaNode(
+        colander.Bool(),
+        title = _("Create and assign a participant number at checkin if the user lacks one?"),
+    )
 
 
 @colander.deferred

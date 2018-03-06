@@ -5,7 +5,13 @@ from datetime import datetime, timedelta
 
 from persistent.list import PersistentList
 from pyramid import testing
+from pyramid.request import apply_request_extensions
 from six import string_types
+from voteit.core.models.meeting import Meeting
+from voteit.core.models.user import User
+from voteit.core.security import ROLE_VIEWER
+from voteit.core.testing_helpers import bootstrap_and_fixture
+from voteit.irl.models.interfaces import IParticipantNumbers
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -136,3 +142,48 @@ class PresenceEventLogTests(TestCase):
             {'in': datetime(2018, 2, 28, hour=13, minute=30),
              'out': datetime(2018, 2, 28, hour=17, minute=30)})
         self.assertEqual(obj.total('jane'), timedelta(hours=7))
+
+
+class SubscriberIntegrationTests(TestCase):
+
+    def setUp(self):
+        self.config = testing.setUp()
+
+    def tearDown(self):
+        testing.tearDown()
+
+    def _fixture(self):
+        root = bootstrap_and_fixture(self.config)
+        self.config.include('arche.portlets')
+        self.config.include('voteit.irl')
+        self.config.include('voteit.qr')
+        request = testing.DummyRequest()
+        request.root = root
+        apply_request_extensions(request)
+        self.config.begin(request)
+        root['m'] = Meeting()
+        root['users']['jane'] = User()
+        root['m'].local_roles['jane'] = [ROLE_VIEWER]
+        return root, request
+
+    def test_assign_pn_if_user_lacks_one(self):
+        from voteit.qr.events import ParticipantCheckIn
+        root, request = self._fixture()
+        meeting = root['m']
+        pqr = IPresenceQR(meeting)
+        pqr.settings = {'assign_pn': True}
+        event = ParticipantCheckIn('jane', meeting)
+        request.registry.notify(event)
+        pns = IParticipantNumbers(meeting)
+        self.assertEqual(pns.userid_to_number.get('jane', None), 1)
+
+    def test_assign_pn_if_user_lacks_one_not_enabled(self):
+        from voteit.qr.events import ParticipantCheckIn
+        root, request = self._fixture()
+        meeting = root['m']
+        pqr = IPresenceQR(meeting)
+        pqr.settings = {'assign_pn': False}
+        event = ParticipantCheckIn('jane', meeting)
+        request.registry.notify(event)
+        pns = IParticipantNumbers(meeting)
+        self.assertEqual(pns.userid_to_number.get('jane', None), None)

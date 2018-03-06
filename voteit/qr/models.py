@@ -18,6 +18,7 @@ from qrcode.image.svg import SvgPathImage
 from six import StringIO
 from six import string_types
 from voteit.core.models.interfaces import IMeeting
+from voteit.irl.models.interfaces import IParticipantNumbers
 from zope.component import adapter
 from zope.interface import implementer
 
@@ -232,7 +233,20 @@ def register_presence_event(event):
     log.add(event.userid, event_name)
 
 
+def assign_pn_if_user_lacks_one(event):
+    meeting = event.meeting
+    pqr = IPresenceQR(meeting)
+    if not pqr.settings.get('assign_pn', None):
+        return
+    pns = IParticipantNumbers(meeting)
+    if event.userid not in pns.userid_to_number:
+        pn = pns.next_free()
+        pns.new_tickets(event.userid, pn)
+        pns.claim_ticket(event.userid, pns.tickets[pn].token)
+
+
 def includeme(config):
     config.registry.registerAdapter(PresenceQR)
     config.registry.registerAdapter(PresenceEventLog)
     config.add_subscriber(register_presence_event, IPresenceEvent)
+    config.add_subscriber(assign_pn_if_user_lacks_one, IParticipantCheckIn)
