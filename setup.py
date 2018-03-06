@@ -12,6 +12,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 requires = (
     'pyramid',
     'voteit.core',
+    'voteit.irl',
     'typing',
     'pyjwt',
     'qrcode',

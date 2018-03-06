@@ -18,12 +18,8 @@ from voteit.core import security
 from voteit.core.models.interfaces import IMeeting
 from voteit.core.views.control_panel import control_panel_category
 from voteit.core.views.control_panel import control_panel_link
+from voteit.irl.models.interfaces import IParticipantNumbers
 from zope.interface.interfaces import ComponentLookupError
-try:
-    from voteit.irl.models.interfaces import IParticipantNumbers
-    use_pns = True
-except ImportError:
-    use_pns = False
 
 from voteit.qr.interfaces import IPresenceQR
 from voteit.qr.interfaces import IPresenceEventLog
@@ -146,11 +142,8 @@ class QRViews(BaseView):
                  renderer='voteit.qr:templates/checked_in_users.pt',
                  permission=security.MODERATE_MEETING)
     def checked_in_users(self):
-        if use_pns:
-            pns = IParticipantNumbers(self.context)
-            if not len(pns):
-                pns = None
-        else:
+        pns = IParticipantNumbers(self.context)
+        if not len(pns):
             pns = None
         users = []
         for userid in self.presence_qr:

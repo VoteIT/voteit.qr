@@ -10,7 +10,7 @@ import jwt
 import qrcode
 from BTrees.OOBTree import OOBTree
 from BTrees.OOBTree import OOSet
-from arche.utils import AttributeAnnotations, utcnow
+from arche.utils import utcnow
 from datetime import timedelta
 from persistent.list import PersistentList
 from pyramid.threadlocal import get_current_request
