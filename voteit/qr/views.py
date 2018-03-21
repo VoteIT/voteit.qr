@@ -130,6 +130,15 @@ class QRViews(BaseView):
             'status_url': self.request.resource_url(self.context, 'my_checkin_status.json')
         }
 
+    @view_config(name='user_checkout',
+                 permission=security.VIEW)
+    def user_checkout(self):
+        if self.presence_qr.checkout(self.request.authenticated_userid, self.request):
+            self.flash_messages.add(_("Checked out"), type="success")
+        else:
+            self.flash_messages.add(_("Already checked out"), type="warning")
+        return HTTPFound(self.request.resource_path(self.context))
+
     @view_config(name='register_endpoint_page',
                  renderer='voteit.qr:templates/register_endpoint_page.pt',
                  permission=security.MODERATE_MEETING)

@@ -27,11 +27,17 @@
 			  i18n:translate="">
 			Checked out
 		</button>
-		<a data-open-modal href="${request.resource_url(context, 'user_check_page')}"
+		<a href="${request.resource_url(context, 'user_check_page')}"
+		   data-open-modal
 		   class="btn btn-default"
 		   i18n:translate="">Recheck status</a>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body" tal:condition="checked_in">
+		<p i18n:translate="checkout_description">
+			You are checked in to the meeting ${context.title}. You should check out when
+			leaving the meeting premises.</p>
+	</div>
+	<div class="modal-body" tal:condition="not checked_in">
 		<img src="${qr_img_url}" width="1000" height="1000" class="img-responsive" />
 	</div>
 	<div class="modal-footer">
@@ -39,9 +45,10 @@
 			Show this image to the check-in station before entering the meeting premises.
 			It will confirm your physical presence.
 		</p>
-		<p tal:condition="checked_in" i18n:translate="checkout_explanation">
-			To check out, show this image the same way you did when you entered the meeting.
-		</p>
+		<a tal:condition="checked_in"
+		   href="${request.resource_url(context, 'user_checkout')}"
+		   class="btn btn-primary"
+		   i18n:translate="">Check out</a>
 	</div>
 
 </div>
