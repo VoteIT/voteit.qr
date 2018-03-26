@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-26 13:34+0200\n"
-"PO-Revision-Date: 2018-03-01 16:01+0100\n"
+"PO-Revision-Date: 2018-03-26 11:40+0000\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Weblate 2.16\n"
 
 #: voteit/qr/schemas.py:19
 msgid "No UserID"
@@ -33,6 +33,7 @@ msgstr "Logga närvarotid för alla användare?"
 msgid ""
 "Create and assign a participant number at checkin if the user lacks one?"
 msgstr ""
+"Skapa och tilldela ett deltagarnummer vid incheckning om användaren saknar?"
 
 #: voteit/qr/schemas.py:52 voteit/qr/templates/checked_in_users.pt:27
 #: voteit/qr/templates/presence_log.pt:21
@@ -40,9 +41,8 @@ msgid "UserID"
 msgstr "AnvändarID"
 
 #: voteit/qr/schemas.py:59
-#, fuzzy
 msgid "Set participant number"
-msgstr "Deltagarnummer"
+msgstr "Tilldela deltagarnummer"
 
 #: voteit/qr/views.py:76
 #, python-format
@@ -123,15 +123,15 @@ msgstr "Status"
 
 #: voteit/qr/views.py:289
 msgid "Participant number is not available"
-msgstr ""
+msgstr "Deltagarnumret är inte tillgängligt"
 
 #: voteit/qr/views.py:294
 msgid "User already has a participant number"
-msgstr ""
+msgstr "Användaren har redan ett deltagarnummer"
 
 #: voteit/qr/views.py:299
 msgid "Participant number already claimed"
-msgstr ""
+msgstr "Deltagarnumret är redan tilldelat en annan användare"
 
 #: voteit/qr/views.py:302
 msgid "Already checked in"
@@ -184,11 +184,11 @@ msgstr "Närvarologg"
 
 #: voteit/qr/templates/manual_form.pt:14
 msgid "Group"
-msgstr ""
+msgstr "Grupp"
 
 #: voteit/qr/templates/manual_form.pt:15
 msgid "Groups"
-msgstr ""
+msgstr "Grupper"
 
 #: voteit/qr/templates/checked_in_users.pt:14
 msgid "Checked in users (${count})"
@@ -218,10 +218,10 @@ msgstr "Kontrollera status"
 #. Default: You are checked in to the meeting ${context.title}. You should
 #. check out when leaving the meeting premises.
 #: voteit/qr/templates/user_check_page.pt:36
-#, fuzzy
 msgid "checkout_description"
 msgstr ""
-"För att checka ut, visa den här bilden på samma sätt som när du checkade in."
+"Du är incheckad på mötet ${context.title}. Vänligen checka ut när du lämnar "
+"möteslokalen."
 
 #. Default: Show this image to the check-in station before entering the meeting
 #. premises. It will confirm your physical presence.
@@ -232,9 +232,8 @@ msgstr ""
 "din fysiska närvaro."
 
 #: voteit/qr/templates/user_check_page.pt:51
-#, fuzzy
 msgid "Check out"
-msgstr "Utcheckad"
+msgstr "Checka ut"
 
 #: voteit/qr/templates/presence_log.pt:22
 msgid "Total time"
