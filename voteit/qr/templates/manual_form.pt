@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="view.macro('arche:templates/master.pt', 'arche:templates/inline.pt')"
+  i18n:domain="voteit.qr">
+<tal:content metal:fill-slot="content">
+    <tal:if condition="len(request.session.get('qr.manual.checked_in', ''))">
+        <div class="jumbotron" tal:define="checkin request.session['qr.manual.checked_in'].pop()">
+            <h2 tal:define="user request.root['users'][checkin['userid']]">${user.first_name} ${user.last_name} (${user.userid})</h2>
+            <p tal:condition="checkin['pn']"><i18n:translate>Participant number</i18n:translate>: <strong>${checkin['pn']}</strong></p>
+            <tal:if condition="checkin['groups']">
+                <h3 tal:condition="len(checkin['groups']) == 1" i18n:translate="">Group</h3>
+                <h3 tal:condition="len(checkin['groups']) > 1" i18n:translate="">Groups</h3>
+                <ul>
+                    <li tal:repeat="item checkin['groups']">${item}</li>
+                </ul>
+            </tal:if>
+        </div>
+    </tal:if>
+    <form tal:replace="structure form" />
+</tal:content>
+</html>

@@ -14,11 +14,13 @@ from pyramid.response import Response
 from pyramid.security import NO_PERMISSION_REQUIRED
 from pyramid.view import view_config
 from pyramid.view import view_defaults
+
 from voteit.core import security
 from voteit.core.models.interfaces import IMeeting
 from voteit.core.views.control_panel import control_panel_category
 from voteit.core.views.control_panel import control_panel_link
 from voteit.irl.models.interfaces import IParticipantNumbers
+from voteit.irl.models.participant_numbers import TicketAlreadyClaimedError
 from zope.interface.interfaces import ComponentLookupError
 
 from voteit.qr.interfaces import IPresenceQR
@@ -227,7 +229,7 @@ class QRSettingsForm(DefaultEditForm):
 
 @view_config(context=IMeeting,
              name="manual_checkin",
-             renderer="arche:templates/form.pt",
+             renderer="voteit.qr:templates/manual_form.pt",
              permission=security.MODERATE_MEETING)
 class QRManualCheckin(DefaultEditForm):
     schema_name = 'manual_checkin'
@@ -238,17 +240,68 @@ class QRManualCheckin(DefaultEditForm):
         Button('checkout', title=_("Check-out"), ),
         Button('status', title=_("Status"), ),
     )
+    session_key = 'qr.manual.checked_in'
 
     @reify
     def presence_qr(self):
         return IPresenceQR(self.context)
 
+    @reify
+    def participant_numbers(self):
+        return IParticipantNumbers(self.context)
+
+    @reify
+    def role_dict(self):
+        # type: () -> dict
+        try:
+            from voteit.vote_groups.schemas import ROLE_CHOICES
+            return dict(ROLE_CHOICES)
+        except ImportError:
+            return {}
+
+    def get_user_groups(self, userid):
+        """ Try to get groups from plugin voteit.vote_groups, if available """
+        try:
+            from voteit.vote_groups.interfaces import IVoteGroups
+        except ImportError:
+            pass
+        else:
+            groups = IVoteGroups(self.context)
+            user_groups = groups.vote_groups_for_user(userid)
+            return ['{} ({})'.format(
+                g.title,
+                self.request.localizer.translate(self.role_dict[g[userid]])
+            ) for g in user_groups]
+
+    def set_checkin_message(self, userid):
+        self.request.session.setdefault(self.session_key, []).append({
+            'userid': userid,
+            'pn': self.participant_numbers.userid_to_number.get(userid),
+            'groups': self.get_user_groups(userid),
+        })
+
     def checkin_success(self, appstruct):
         userid = appstruct['userid']
-        if self.presence_qr.checkin(userid, self.request):
-            self.flash_messages.add(_("Checked in"), type="success")
-        else:
+        pn = appstruct['pn']
+        ticket = pn and self.participant_numbers.tickets.get(pn)
+
+        if pn and not ticket:
+            self.flash_messages.add(_("Participant number is not available"), type="warning")
+
+        checkin_status = self.presence_qr.checkin(userid, self.request)
+        if ticket:
+            if self.participant_numbers.userid_to_number.get(userid):
+                self.flash_messages.add(_("User already has a participant number"), type="warning")
+            else:
+                try:
+                    self.participant_numbers.claim_ticket(userid, ticket.token)
+                except TicketAlreadyClaimedError:
+                    self.flash_messages.add(_("Participant number already claimed"), type="warning")
+
+        elif not checkin_status:
             self.flash_messages.add(_("Already checked in"), type="warning")
+
+        self.set_checkin_message(userid)
         return HTTPFound(location=self.request.resource_url(self.context, 'manual_checkin'))
 
     def checkout_success(self, appstruct):
@@ -263,6 +316,7 @@ class QRManualCheckin(DefaultEditForm):
         userid = appstruct['userid']
         if userid in self.presence_qr:
             self.flash_messages.add(_("User is checked in"), type="success")
+            self.set_checkin_message(userid)
         else:
             self.flash_messages.add(_("User is checked out"), type="danger")
         url = self.request.resource_url(self.context, 'manual_checkin', query={'userid': userid})

@@ -49,10 +49,15 @@ def submitted_userid(node, kw):
 class QRManualCheckin(colander.Schema):
     userid = colander.SchemaNode(
         colander.String(),
-        title = _("UserID"),
-        widget = deferred_autocompleting_userid_widget,
-        validator = UserCanViewMeeting,
+        title=_("UserID"),
+        widget=deferred_autocompleting_userid_widget,
+        validator=UserCanViewMeeting,
         default=submitted_userid,
+    )
+    pn = colander.SchemaNode(
+        colander.Int(),
+        title=_('Set participant number'),
+        missing=None,
     )
 
 
