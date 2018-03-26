@@ -88,8 +88,8 @@ msgstr "QR-inställningar"
 #: voteit/qr/views.py:215
 msgid "logging_enalbed_with_checked_in_warning"
 msgstr ""
-"${users} har redan checkat in så deras utcheckningar kommer inte "
-"registreras i loggen."
+"${users} har redan checkat in så deras utcheckningar kommer inte registreras "
+"i loggen."
 
 #: voteit/qr/views.py:233
 msgid "Manual checkin"
