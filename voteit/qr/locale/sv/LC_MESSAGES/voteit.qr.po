@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-26 13:47+0200\n"
-"PO-Revision-Date: 2018-03-26 11:40+0000\n"
+"PO-Revision-Date: 2018-03-26 11:48+0000\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -183,9 +183,8 @@ msgid "Presence log"
 msgstr "Närvarologg"
 
 #: voteit/qr/templates/manual_form.pt:12
-#, fuzzy
 msgid "Participant number"
-msgstr "Tilldela deltagarnummer"
+msgstr "Deltagarnummer"
 
 #: voteit/qr/templates/manual_form.pt:14
 msgid "Group"
