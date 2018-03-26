@@ -9,7 +9,7 @@
     <tal:if condition="len(request.session.get('qr.manual.checked_in', ''))">
         <div class="jumbotron" tal:define="checkin request.session['qr.manual.checked_in'].pop()">
             <h2 tal:define="user request.root['users'][checkin['userid']]">${user.first_name} ${user.last_name} (${user.userid})</h2>
-            <p tal:condition="checkin['pn']"><i18n:translate>Participant number</i18n:translate>: <strong>${checkin['pn']}</strong></p>
+            <p tal:condition="checkin['pn']"><tal:ts i18n:translate="">Participant number</tal:ts>: <strong>${checkin['pn']}</strong></p>
             <tal:if condition="checkin['groups']">
                 <h3 tal:condition="len(checkin['groups']) == 1" i18n:translate="">Group</h3>
                 <h3 tal:condition="len(checkin['groups']) > 1" i18n:translate="">Groups</h3>
