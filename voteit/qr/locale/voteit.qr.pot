@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-03-26 13:47+0200\n"
+"POT-Creation-Date: 2018-04-06 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,18 +182,6 @@ msgstr ""
 msgid "Presence log"
 msgstr ""
 
-#: ./voteit/qr/templates/manual_form.pt:12
-msgid "Participant number"
-msgstr ""
-
-#: ./voteit/qr/templates/manual_form.pt:14
-msgid "Group"
-msgstr ""
-
-#: ./voteit/qr/templates/manual_form.pt:15
-msgid "Groups"
-msgstr ""
-
 #: ./voteit/qr/templates/checked_in_users.pt:14
 msgid "Checked in users (${count})"
 msgstr ""
@@ -211,28 +199,16 @@ msgstr ""
 msgid "Participant no"
 msgstr ""
 
-#: ./voteit/qr/templates/user_check_page.pt:22
-msgid "Checked in"
+#: ./voteit/qr/templates/manual_form.pt:12
+msgid "Participant number"
 msgstr ""
 
-#: ./voteit/qr/templates/user_check_page.pt:33
-msgid "Recheck status"
+#: ./voteit/qr/templates/manual_form.pt:14
+msgid "Group"
 msgstr ""
 
-#. Default: You are checked in to the meeting ${context.title}. You should
-#. check out when leaving the meeting premises.
-#: ./voteit/qr/templates/user_check_page.pt:36
-msgid "checkout_description"
-msgstr ""
-
-#. Default: Show this image to the check-in station before entering the meeting
-#. premises. It will confirm your physical presence.
-#: ./voteit/qr/templates/user_check_page.pt:44
-msgid "checkin_explanation"
-msgstr ""
-
-#: ./voteit/qr/templates/user_check_page.pt:51
-msgid "Check out"
+#: ./voteit/qr/templates/manual_form.pt:15
+msgid "Groups"
 msgstr ""
 
 #: ./voteit/qr/templates/presence_log.pt:22
@@ -245,4 +221,28 @@ msgstr ""
 
 #: ./voteit/qr/templates/presence_log.pt:24
 msgid "Last exit"
+msgstr ""
+
+#: ./voteit/qr/templates/user_check_page.pt:22
+msgid "Checked in"
+msgstr ""
+
+#: ./voteit/qr/templates/user_check_page.pt:33
+msgid "Recheck status"
+msgstr ""
+
+#. Default: You are checked in to the meeting ${title}. You should check out
+#. when leaving the meeting premises.
+#: ./voteit/qr/templates/user_check_page.pt:36
+msgid "checkout_description"
+msgstr ""
+
+#. Default: Show this image to the check-in station before entering the meeting
+#. premises. It will confirm your physical presence.
+#: ./voteit/qr/templates/user_check_page.pt:46
+msgid "checkin_explanation"
+msgstr ""
+
+#: ./voteit/qr/templates/user_check_page.pt:53
+msgid "Check out"
 msgstr ""

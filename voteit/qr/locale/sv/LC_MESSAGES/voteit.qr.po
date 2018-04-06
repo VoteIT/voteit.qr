@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-26 13:47+0200\n"
-"PO-Revision-Date: 2018-03-26 11:48+0000\n"
+"POT-Creation-Date: 2018-04-06 14:21+0200\n"
+"PO-Revision-Date: 2018-04-06 14:22+0200\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.16\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: voteit/qr/schemas.py:19
 msgid "No UserID"
@@ -182,18 +182,6 @@ msgstr "Visa incheckade användare"
 msgid "Presence log"
 msgstr "Närvarologg"
 
-#: voteit/qr/templates/manual_form.pt:12
-msgid "Participant number"
-msgstr "Deltagarnummer"
-
-#: voteit/qr/templates/manual_form.pt:14
-msgid "Group"
-msgstr "Grupp"
-
-#: voteit/qr/templates/manual_form.pt:15
-msgid "Groups"
-msgstr "Grupper"
-
 #: voteit/qr/templates/checked_in_users.pt:14
 msgid "Checked in users (${count})"
 msgstr "Incheckade användare (${count})"
@@ -211,33 +199,17 @@ msgstr "Namn"
 msgid "Participant no"
 msgstr "Deltagarnummer"
 
-#: voteit/qr/templates/user_check_page.pt:22
-msgid "Checked in"
-msgstr "Incheckad"
+#: voteit/qr/templates/manual_form.pt:12
+msgid "Participant number"
+msgstr "Deltagarnummer"
 
-#: voteit/qr/templates/user_check_page.pt:33
-msgid "Recheck status"
-msgstr "Kontrollera status"
+#: voteit/qr/templates/manual_form.pt:14
+msgid "Group"
+msgstr "Grupp"
 
-#. Default: You are checked in to the meeting ${context.title}. You should
-#. check out when leaving the meeting premises.
-#: voteit/qr/templates/user_check_page.pt:36
-msgid "checkout_description"
-msgstr ""
-"Du är incheckad på mötet ${context.title}. Vänligen checka ut när du lämnar "
-"möteslokalen."
-
-#. Default: Show this image to the check-in station before entering the meeting
-#. premises. It will confirm your physical presence.
-#: voteit/qr/templates/user_check_page.pt:44
-msgid "checkin_explanation"
-msgstr ""
-"Visa bilden i incheckningen innan du går in i möteslokalen. Det bekräftar "
-"din fysiska närvaro."
-
-#: voteit/qr/templates/user_check_page.pt:51
-msgid "Check out"
-msgstr "Checka ut"
+#: voteit/qr/templates/manual_form.pt:15
+msgid "Groups"
+msgstr "Grupper"
 
 #: voteit/qr/templates/presence_log.pt:22
 msgid "Total time"
@@ -250,6 +222,34 @@ msgstr "Första ankomst"
 #: voteit/qr/templates/presence_log.pt:24
 msgid "Last exit"
 msgstr "Sista utgång"
+
+#: voteit/qr/templates/user_check_page.pt:22
+msgid "Checked in"
+msgstr "Incheckad"
+
+#: voteit/qr/templates/user_check_page.pt:33
+msgid "Recheck status"
+msgstr "Kontrollera status"
+
+#. Default: You are checked in to the meeting ${title}. You should check out
+#. when leaving the meeting premises.
+#: voteit/qr/templates/user_check_page.pt:36
+msgid "checkout_description"
+msgstr ""
+"Du är incheckad på mötet ${title}. Vänligen checka ut när du lämnar "
+"möteslokalen."
+
+#. Default: Show this image to the check-in station before entering the meeting
+#. premises. It will confirm your physical presence.
+#: voteit/qr/templates/user_check_page.pt:46
+msgid "checkin_explanation"
+msgstr ""
+"Visa bilden i incheckningen innan du går in i möteslokalen. Det bekräftar "
+"din fysiska närvaro."
+
+#: voteit/qr/templates/user_check_page.pt:53
+msgid "Check out"
+msgstr "Checka ut"
 
 #~ msgid "Your status:"
 #~ msgstr "Din status:"
