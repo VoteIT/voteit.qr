@@ -6,7 +6,7 @@
   metal:use-macro="view.macro('arche:templates/master.pt', 'arche:templates/inline.pt')"
   i18n:domain="voteit.qr">
 <tal:content metal:fill-slot="content">
-    <tal:def define="checkin view.pop_checkin_message()">
+    <tal:def define="checkin view.pop_checkin_message()|{}">
         <div tal:condition="checkin" class="jumbotron">
             <h2>${structure: request.creators_info([checkin['userid']])}</h2>
             <p tal:condition="checkin['pn']|False">
