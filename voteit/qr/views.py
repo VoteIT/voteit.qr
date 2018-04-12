@@ -254,10 +254,10 @@ class QRManualCheckin(DefaultEditForm):
     def role_dict(self):
         # type: () -> dict
         try:
-            from voteit.vote_groups.schemas import ROLE_CHOICES
-            return dict(ROLE_CHOICES)
+            from voteit.vote_groups.interfaces import VOTE_GROUP_ROLES
         except ImportError:
             return {}
+        return dict(VOTE_GROUP_ROLES)
 
     def get_user_groups(self, userid):
         """ Try to get groups from plugin voteit.vote_groups, if available """
@@ -270,15 +270,22 @@ class QRManualCheckin(DefaultEditForm):
             user_groups = groups.vote_groups_for_user(userid)
             return ['{} ({})'.format(
                 g.title,
-                self.request.localizer.translate(self.role_dict[g[userid]])
+                self.request.localizer.translate(self.role_dict.get(g[userid], g[userid]))
             ) for g in user_groups]
 
     def set_checkin_message(self, userid):
-        self.request.session.setdefault(self.session_key, []).append({
+        checked_in = self.request.session.setdefault(self.session_key, {})
+        checked_in[self.context.uid] = {
             'userid': userid,
             'pn': self.participant_numbers.userid_to_number.get(userid),
             'groups': self.get_user_groups(userid),
-        })
+        }
+        self.request.session.changed()
+
+    def pop_checkin_message(self):
+        msg = self.request.session.get(self.session_key, {}).pop(self.context.uid, {})
+        self.request.session.changed()
+        return msg
 
     def checkin_success(self, appstruct):
         userid = appstruct['userid']

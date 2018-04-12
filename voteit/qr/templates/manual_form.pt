@@ -6,11 +6,14 @@
   metal:use-macro="view.macro('arche:templates/master.pt', 'arche:templates/inline.pt')"
   i18n:domain="voteit.qr">
 <tal:content metal:fill-slot="content">
-    <tal:if condition="len(request.session.get('qr.manual.checked_in', ''))">
-        <div class="jumbotron" tal:define="checkin request.session['qr.manual.checked_in'].pop()">
-            <h2 tal:define="user request.root['users'][checkin['userid']]">${user.first_name} ${user.last_name} (${user.userid})</h2>
-            <p tal:condition="checkin['pn']"><tal:ts i18n:translate="">Participant number</tal:ts>: <strong>${checkin['pn']}</strong></p>
-            <tal:if condition="checkin['groups']">
+    <tal:def define="checkin view.pop_checkin_message()">
+        <div tal:condition="checkin" class="jumbotron">
+            <h2>${structure: request.creators_info([checkin['userid']])}</h2>
+            <p tal:condition="checkin['pn']|False">
+                <tal:ts i18n:translate="">Participant number</tal:ts>:
+                <strong>${checkin['pn']}</strong>
+            </p>
+            <tal:if condition="checkin['groups']|False">
                 <h3 tal:condition="len(checkin['groups']) == 1" i18n:translate="">Group</h3>
                 <h3 tal:condition="len(checkin['groups']) > 1" i18n:translate="">Groups</h3>
                 <ul>
@@ -18,7 +21,7 @@
                 </ul>
             </tal:if>
         </div>
-    </tal:if>
+    </tal:def>
     <form tal:replace="structure form" />
 </tal:content>
 </html>
