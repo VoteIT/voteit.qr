@@ -275,6 +275,8 @@ class QRManualCheckin(DefaultEditForm):
 
     def set_checkin_message(self, userid):
         checked_in = self.request.session.setdefault(self.session_key, {})
+        if not isinstance(checked_in, dict):
+            self.request.session[self.session_key] = {}
         checked_in[self.context.uid] = {
             'userid': userid,
             'pn': self.participant_numbers.userid_to_number.get(userid),
