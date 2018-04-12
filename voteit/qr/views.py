@@ -293,10 +293,8 @@ class QRManualCheckin(DefaultEditForm):
         userid = appstruct['userid']
         pn = appstruct['pn']
         ticket = pn and self.participant_numbers.tickets.get(pn)
-
         if pn and not ticket:
             self.flash_messages.add(_("Participant number is not available"), type="warning")
-
         checkin_status = self.presence_qr.checkin(userid, self.request)
         if ticket:
             if self.participant_numbers.userid_to_number.get(userid):
@@ -306,10 +304,8 @@ class QRManualCheckin(DefaultEditForm):
                     self.participant_numbers.claim_ticket(userid, ticket.token)
                 except TicketAlreadyClaimedError:
                     self.flash_messages.add(_("Participant number already claimed"), type="warning")
-
         elif not checkin_status:
             self.flash_messages.add(_("Already checked in"), type="warning")
-
         self.set_checkin_message(userid)
         return HTTPFound(location=self.request.resource_url(self.context, 'manual_checkin'))
 
