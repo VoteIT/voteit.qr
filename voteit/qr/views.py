@@ -266,7 +266,7 @@ class QRManualCheckin(DefaultEditForm):
         except ImportError:
             pass
         else:
-            groups = IVoteGroups(self.context)
+            groups = self.request.registry.getMultiAdapter([self.context, self.request], IVoteGroups)
             user_groups = groups.vote_groups_for_user(userid)
             return ['{} ({})'.format(
                 g.title,
