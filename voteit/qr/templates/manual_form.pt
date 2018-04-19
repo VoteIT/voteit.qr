@@ -20,6 +20,7 @@
                     <li tal:repeat="item checkin['groups']">${item}</li>
                 </ul>
             </tal:if>
+            <p tal:condition="not checkin['groups']|True" i18n:translate="">No group membership</p>
         </div>
     </tal:def>
     <form tal:replace="structure form" />
