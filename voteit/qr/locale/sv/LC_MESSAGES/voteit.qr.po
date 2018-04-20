@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:15+0200\n"
-"PO-Revision-Date: 2018-04-06 14:22+0200\n"
+"PO-Revision-Date: 2018-04-20 12:17+0000\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Weblate 2.16\n"
 
 #: voteit/qr/schemas.py:19
 msgid "No UserID"
@@ -196,15 +196,15 @@ msgstr "Grupper"
 
 #: voteit/qr/templates/manual_form.pt:28
 msgid "Substitute for"
-msgstr ""
+msgstr "Ersätter"
 
 #: voteit/qr/templates/manual_form.pt:33
 msgid "substitutes"
-msgstr ""
+msgstr "ersätter"
 
 #: voteit/qr/templates/manual_form.pt:42
 msgid "No group membership"
-msgstr ""
+msgstr "Inget gruppmedlemskap"
 
 #: voteit/qr/templates/checked_in_users.pt:14
 msgid "Checked in users (${count})"
