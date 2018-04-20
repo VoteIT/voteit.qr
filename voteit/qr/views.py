@@ -268,19 +268,29 @@ class QRManualCheckin(DefaultEditForm):
         else:
             groups = self.request.registry.getMultiAdapter([self.context, self.request], IVoteGroups)
             user_groups = groups.vote_groups_for_user(userid)
-            return ['{} ({})'.format(
-                g.title,
-                self.request.localizer.translate(self.role_dict.get(g[userid], g[userid]))
-            ) for g in user_groups]
+            return [{
+                'title': g.title,
+                'role': self.request.localizer.translate(self.role_dict.get(g[userid]) or g[userid]).lower(),
+                'substitutes': g.get_primary_for(userid),
+                'substitute': g.get_substitute_for(userid),
+                'is_voter': userid in g.get_voters(),
+            } for g in user_groups]
+            # return ['{} ({})'.format(
+            #     g.title,
+            #     self.request.localizer.translate(self.role_dict.get(g[userid]) or g[userid]).lower()
+            # ) for g in user_groups]
 
     def set_checkin_message(self, userid):
         checked_in = self.request.session.setdefault(self.session_key, {})
+        # Below, temp solution because bad data in db
         if not isinstance(checked_in, dict):
             self.request.session[self.session_key] = {}
+        user_groups = self.get_user_groups(userid)
         checked_in[self.context.uid] = {
             'userid': userid,
             'pn': self.participant_numbers.userid_to_number.get(userid),
-            'groups': self.get_user_groups(userid),
+            'groups': user_groups,
+            'is_voter': any(g['is_voter'] for g in user_groups),
         }
         self.request.session.changed()
 

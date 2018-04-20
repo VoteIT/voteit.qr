@@ -13,11 +13,30 @@
                 <tal:ts i18n:translate="">Participant number</tal:ts>:
                 <strong>${checkin['pn']}</strong>
             </p>
+            <p tal:condition="checkin.is_voter|False">
+                <strong>Should be able to vote</strong>
+                <span class="glyphicon glyphicon-star"></span>
+            </p>
             <tal:if condition="checkin['groups']|False">
                 <h3 tal:condition="len(checkin['groups']) == 1" i18n:translate="">Group</h3>
                 <h3 tal:condition="len(checkin['groups']) > 1" i18n:translate="">Groups</h3>
                 <ul>
-                    <li tal:repeat="item checkin['groups']">${item}</li>
+                    <li tal:repeat="item checkin['groups']">
+                        <strong tal:condition="item.is_voter">${item.title}:</strong>
+                        <span tal:condition="not item.is_voter">${item.title}:</span>
+                        <strong tal:condition="item.substitutes">
+                            <tal:ts i18n:translate="">Substitute for</tal:ts>
+                            ${structure: request.creators_info([item.substitutes], portrait=False, no_tag=True, no_userid=True)}
+                        </strong>
+                        <span tal:condition="item.substitute">
+                            ${structure: request.creators_info([item.substitute], portrait=False, no_tag=True, no_userid=True)}
+                            <tal:ts i18n:translate="">substitutes</tal:ts>
+                        </span>
+                        <tal:if condition="not item.substitutes and not item.substitute">
+                            <strong tal:condition="item.is_voter">${item.role}</strong>
+                            <span tal:condition="not item.is_voter">${item.role}</span>
+                        </tal:if>
+                    </li>
                 </ul>
             </tal:if>
             <p tal:condition="not checkin['groups']|True" i18n:translate="">No group membership</p>
