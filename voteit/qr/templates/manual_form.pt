@@ -14,8 +14,11 @@
                 <strong>${checkin['pn']}</strong>
             </p>
             <p tal:condition="checkin.is_voter|False">
-                <strong>Should be able to vote</strong>
+                <strong i18n:translate="">Should be able to vote</strong>
                 <span class="glyphicon glyphicon-star"></span>
+            </p>
+            <p tal:condition="not checkin.is_voter|False">
+                <tal:ts i18n:translate="">No voting rights</tal:ts>
             </p>
             <tal:if condition="checkin['groups']|False">
                 <h3 tal:condition="len(checkin['groups']) == 1" i18n:translate="">Group</h3>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:15+0200\n"
-"PO-Revision-Date: 2018-04-20 12:17+0000\n"
+"POT-Creation-Date: 2018-04-20 14:37+0200\n"
+"PO-Revision-Date: 2018-04-20 14:39+0200\n"
 "Last-Translator: Weblate Admin <admin@example.com>\n"
 "Language-Team: Swedish <http://example.com/projects/voteit/voteit-qr/sv/>\n"
 "Language: sv\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.16\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: voteit/qr/schemas.py:19
 msgid "No UserID"
@@ -186,23 +186,31 @@ msgstr "Närvarologg"
 msgid "Participant number"
 msgstr "Deltagarnummer"
 
+#: voteit/qr/templates/manual_form.pt:17
+msgid "Should be able to vote"
+msgstr "Ska ha rösträtt"
+
 #: voteit/qr/templates/manual_form.pt:21
+msgid "No voting rights"
+msgstr "Ingen rösträtt"
+
+#: voteit/qr/templates/manual_form.pt:24
 msgid "Group"
 msgstr "Grupp"
 
-#: voteit/qr/templates/manual_form.pt:22
+#: voteit/qr/templates/manual_form.pt:25
 msgid "Groups"
 msgstr "Grupper"
 
-#: voteit/qr/templates/manual_form.pt:28
+#: voteit/qr/templates/manual_form.pt:31
 msgid "Substitute for"
 msgstr "Ersätter"
 
-#: voteit/qr/templates/manual_form.pt:33
+#: voteit/qr/templates/manual_form.pt:36
 msgid "substitutes"
 msgstr "ersätter"
 
-#: voteit/qr/templates/manual_form.pt:42
+#: voteit/qr/templates/manual_form.pt:45
 msgid "No group membership"
 msgstr "Inget gruppmedlemskap"
 

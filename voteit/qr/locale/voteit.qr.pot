@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-04-20 14:15+0200\n"
+"POT-Creation-Date: 2018-04-20 14:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -186,23 +186,31 @@ msgstr ""
 msgid "Participant number"
 msgstr ""
 
+#: ./voteit/qr/templates/manual_form.pt:17
+msgid "Should be able to vote"
+msgstr ""
+
 #: ./voteit/qr/templates/manual_form.pt:21
+msgid "No voting rights"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:24
 msgid "Group"
 msgstr ""
 
-#: ./voteit/qr/templates/manual_form.pt:22
+#: ./voteit/qr/templates/manual_form.pt:25
 msgid "Groups"
 msgstr ""
 
-#: ./voteit/qr/templates/manual_form.pt:28
+#: ./voteit/qr/templates/manual_form.pt:31
 msgid "Substitute for"
 msgstr ""
 
-#: ./voteit/qr/templates/manual_form.pt:33
+#: ./voteit/qr/templates/manual_form.pt:36
 msgid "substitutes"
 msgstr ""
 
-#: ./voteit/qr/templates/manual_form.pt:42
+#: ./voteit/qr/templates/manual_form.pt:45
 msgid "No group membership"
 msgstr ""
 
