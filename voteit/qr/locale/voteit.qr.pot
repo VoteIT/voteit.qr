@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-04-06 14:21+0200\n"
+"POT-Creation-Date: 2018-04-20 14:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,7 +60,7 @@ msgstr ""
 msgid "You've checked in as ${userid}"
 msgstr ""
 
-#: ./voteit/qr/views.py:106 ./voteit/qr/views.py:139 ./voteit/qr/views.py:310
+#: ./voteit/qr/views.py:106 ./voteit/qr/views.py:139 ./voteit/qr/views.py:325
 #: ./voteit/qr/templates/user_check_page.pt:27
 msgid "Checked out"
 msgstr ""
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ./voteit/qr/views.py:141 ./voteit/qr/views.py:312
+#: ./voteit/qr/views.py:141 ./voteit/qr/views.py:327
 msgid "Already checked out"
 msgstr ""
 
@@ -109,11 +109,11 @@ msgstr ""
 msgid "Manual checkin"
 msgstr ""
 
-#: ./voteit/qr/views.py:239 ./voteit/qr/views.py:371
+#: ./voteit/qr/views.py:239 ./voteit/qr/views.py:386
 msgid "Check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:240 ./voteit/qr/views.py:369
+#: ./voteit/qr/views.py:240 ./voteit/qr/views.py:384
 msgid "Check-out"
 msgstr ""
 
@@ -121,65 +121,89 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ./voteit/qr/views.py:289
+#: ./voteit/qr/views.py:307
 msgid "Participant number is not available"
 msgstr ""
 
-#: ./voteit/qr/views.py:294
+#: ./voteit/qr/views.py:311
 msgid "User already has a participant number"
 msgstr ""
 
-#: ./voteit/qr/views.py:299
+#: ./voteit/qr/views.py:316
 msgid "Participant number already claimed"
 msgstr ""
 
-#: ./voteit/qr/views.py:302
+#: ./voteit/qr/views.py:318
 msgid "Already checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:318
+#: ./voteit/qr/views.py:333
 msgid "User is checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:321
+#: ./voteit/qr/views.py:336
 msgid "User is checked out"
 msgstr ""
 
-#: ./voteit/qr/views.py:331
+#: ./voteit/qr/views.py:346
 msgid "Checkout everyone - are you sure?"
 msgstr ""
 
-#: ./voteit/qr/views.py:344
+#: ./voteit/qr/views.py:359
 #, python-format
 msgid "Checked out ${num} users"
 msgstr ""
 
-#: ./voteit/qr/views.py:382
+#: ./voteit/qr/views.py:397
 msgid "QR codes"
 msgstr ""
 
-#: ./voteit/qr/views.py:383
+#: ./voteit/qr/views.py:398
 msgid "Checkin with QR codes."
 msgstr ""
 
-#: ./voteit/qr/views.py:390
+#: ./voteit/qr/views.py:405
 msgid "Settings"
 msgstr ""
 
-#: ./voteit/qr/views.py:396
+#: ./voteit/qr/views.py:411
 msgid "Register endpoint"
 msgstr ""
 
-#: ./voteit/qr/views.py:402
+#: ./voteit/qr/views.py:417
 msgid "Manual check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:408
+#: ./voteit/qr/views.py:423
 msgid "Show checked in users"
 msgstr ""
 
-#: ./voteit/qr/views.py:414 ./voteit/qr/templates/presence_log.pt:13
+#: ./voteit/qr/views.py:429 ./voteit/qr/templates/presence_log.pt:13
 msgid "Presence log"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:13
+msgid "Participant number"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:21
+msgid "Group"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:22
+msgid "Groups"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:28
+msgid "Substitute for"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:33
+msgid "substitutes"
+msgstr ""
+
+#: ./voteit/qr/templates/manual_form.pt:42
+msgid "No group membership"
 msgstr ""
 
 #: ./voteit/qr/templates/checked_in_users.pt:14
@@ -197,30 +221,6 @@ msgstr ""
 
 #: ./voteit/qr/templates/checked_in_users.pt:28
 msgid "Participant no"
-msgstr ""
-
-#: ./voteit/qr/templates/manual_form.pt:12
-msgid "Participant number"
-msgstr ""
-
-#: ./voteit/qr/templates/manual_form.pt:14
-msgid "Group"
-msgstr ""
-
-#: ./voteit/qr/templates/manual_form.pt:15
-msgid "Groups"
-msgstr ""
-
-#: ./voteit/qr/templates/presence_log.pt:22
-msgid "Total time"
-msgstr ""
-
-#: ./voteit/qr/templates/presence_log.pt:23
-msgid "First entry"
-msgstr ""
-
-#: ./voteit/qr/templates/presence_log.pt:24
-msgid "Last exit"
 msgstr ""
 
 #: ./voteit/qr/templates/user_check_page.pt:22
@@ -245,4 +245,16 @@ msgstr ""
 
 #: ./voteit/qr/templates/user_check_page.pt:53
 msgid "Check out"
+msgstr ""
+
+#: ./voteit/qr/templates/presence_log.pt:22
+msgid "Total time"
+msgstr ""
+
+#: ./voteit/qr/templates/presence_log.pt:23
+msgid "First entry"
+msgstr ""
+
+#: ./voteit/qr/templates/presence_log.pt:24
+msgid "Last exit"
 msgstr ""
