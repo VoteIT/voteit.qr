@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from arche.security import principal_has_permisson
 from colander import Schema
 from deform import Button
 from jwt import DecodeError
@@ -14,7 +15,6 @@ from pyramid.response import Response
 from pyramid.security import NO_PERMISSION_REQUIRED
 from pyramid.view import view_config
 from pyramid.view import view_defaults
-
 from voteit.core import security
 from voteit.core.models.interfaces import IMeeting
 from voteit.core.views.control_panel import control_panel_category
@@ -89,7 +89,7 @@ class QRViews(BaseView):
         except KeyError:
             raise HTTPBadRequest('Invalid data')
         response = {}
-        if not self.request.has_permission(security.VIEW, context=self.context, for_userid=userid):
+        if not principal_has_permisson(self.request, userid, security.VIEW, context=self.context):
             raise HTTPForbidden("Not part of this meeting")
         # Check actions against what's being sent?
         # FIXME: Allow checkin event to decide what messages should be sent

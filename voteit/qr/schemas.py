@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import colander
 from arche.widgets import deferred_autocompleting_userid_widget
+from arche.security import principal_has_permisson
 from voteit.core.security import VIEW
 
 from voteit.qr import _
@@ -17,7 +18,7 @@ class UserCanViewMeeting(object):
     def __call__(self, node, value):
         if not value:
             raise colander.Invalid(node, _("No UserID"))
-        if not self.request.has_permission(VIEW, context=self.request.meeting, for_userid=value):
+        if not principal_has_permisson(self.request, value, VIEW, context=self.context):
             raise colander.Invalid(
                 node,
                 _("That user doesn't have permission to view this meeting.")
