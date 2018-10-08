@@ -13,6 +13,7 @@ from voteit.qr import _
 class UserCanViewMeeting(object):
 
     def __init__(self, node, kw):
+        self.context = kw['context']
         self.request = kw['request']
 
     def __call__(self, node, value):
