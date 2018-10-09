@@ -275,10 +275,6 @@ class QRManualCheckin(DefaultEditForm):
                 'substitute': g.get_substitute_for(userid),
                 'is_voter': userid in g.get_voters(),
             } for g in user_groups]
-            # return ['{} ({})'.format(
-            #     g.title,
-            #     self.request.localizer.translate(self.role_dict.get(g[userid]) or g[userid]).lower()
-            # ) for g in user_groups]
 
     def set_checkin_message(self, userid):
         checked_in = self.request.session.setdefault(self.session_key, {})

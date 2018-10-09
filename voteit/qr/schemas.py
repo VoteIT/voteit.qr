@@ -5,6 +5,7 @@ import colander
 from arche.widgets import deferred_autocompleting_userid_widget
 from arche.security import principal_has_permisson
 from voteit.core.security import VIEW
+from voteit.irl.schemas import deferred_existing_participant_number_validator
 
 from voteit.qr import _
 
@@ -60,6 +61,7 @@ class QRManualCheckin(colander.Schema):
         colander.Int(),
         title=_('Set participant number'),
         missing=None,
+        validator=deferred_existing_participant_number_validator,
     )
 
 
