@@ -61,7 +61,6 @@ class QRManualCheckin(colander.Schema):
         colander.Int(),
         title=_('Set participant number'),
         missing=None,
-        validator=deferred_existing_participant_number_validator,
     )
 
 
