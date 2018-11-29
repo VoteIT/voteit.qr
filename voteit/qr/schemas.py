@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import colander
-from arche.widgets import deferred_autocompleting_userid_widget
+from arche.widgets import UserReferenceWidget
 from arche.security import principal_has_permisson
 from voteit.core.security import VIEW
 from voteit.irl.schemas import deferred_existing_participant_number_validator
@@ -52,8 +52,8 @@ def submitted_userid(node, kw):
 class QRManualCheckin(colander.Schema):
     userid = colander.SchemaNode(
         colander.String(),
-        title=_("UserID"),
-        widget=deferred_autocompleting_userid_widget,
+        title=_("User"),
+        widget=UserReferenceWidget(multiple=False),
         validator=UserCanViewMeeting,
         default=submitted_userid,
     )

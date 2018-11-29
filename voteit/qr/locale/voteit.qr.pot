@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2018-04-20 14:37+0200\n"
+"POT-Creation-Date: 2018-11-29 18:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,33 +16,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Lingua 4.13\n"
 
-#: ./voteit/qr/schemas.py:19
+#: ./voteit/qr/schemas.py:23
 msgid "No UserID"
 msgstr ""
 
-#: ./voteit/qr/schemas.py:23
+#: ./voteit/qr/schemas.py:27
 msgid "That user doesn't have permission to view this meeting."
 msgstr ""
 
-#: ./voteit/qr/schemas.py:30
+#: ./voteit/qr/schemas.py:34
 msgid "Enable QR code checkin?"
 msgstr ""
 
-#: ./voteit/qr/schemas.py:34
+#: ./voteit/qr/schemas.py:38
 msgid "Log time present for all users?"
 msgstr ""
 
-#: ./voteit/qr/schemas.py:39
+#: ./voteit/qr/schemas.py:43
 msgid ""
 "Create and assign a participant number at checkin if the user lacks one?"
 msgstr ""
 
-#: ./voteit/qr/schemas.py:52 ./voteit/qr/templates/checked_in_users.pt:27
-#: ./voteit/qr/templates/presence_log.pt:21
-msgid "UserID"
+#: ./voteit/qr/schemas.py:56
+msgid "User"
 msgstr ""
 
-#: ./voteit/qr/schemas.py:59
+#: ./voteit/qr/schemas.py:63
 msgid "Set participant number"
 msgstr ""
 
@@ -60,7 +59,7 @@ msgstr ""
 msgid "You've checked in as ${userid}"
 msgstr ""
 
-#: ./voteit/qr/views.py:106 ./voteit/qr/views.py:139 ./voteit/qr/views.py:325
+#: ./voteit/qr/views.py:106 ./voteit/qr/views.py:139 ./voteit/qr/views.py:321
 #: ./voteit/qr/templates/user_check_page.pt:27
 msgid "Checked out"
 msgstr ""
@@ -87,7 +86,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ./voteit/qr/views.py:141 ./voteit/qr/views.py:327
+#: ./voteit/qr/views.py:141 ./voteit/qr/views.py:323
 msgid "Already checked out"
 msgstr ""
 
@@ -109,11 +108,11 @@ msgstr ""
 msgid "Manual checkin"
 msgstr ""
 
-#: ./voteit/qr/views.py:239 ./voteit/qr/views.py:386
+#: ./voteit/qr/views.py:239 ./voteit/qr/views.py:382
 msgid "Check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:240 ./voteit/qr/views.py:384
+#: ./voteit/qr/views.py:240 ./voteit/qr/views.py:380
 msgid "Check-out"
 msgstr ""
 
@@ -121,64 +120,64 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ./voteit/qr/views.py:307
+#: ./voteit/qr/views.py:303
 msgid "Participant number is not available"
 msgstr ""
 
-#: ./voteit/qr/views.py:311
+#: ./voteit/qr/views.py:307
 msgid "User already has a participant number"
 msgstr ""
 
-#: ./voteit/qr/views.py:316
+#: ./voteit/qr/views.py:312
 msgid "Participant number already claimed"
 msgstr ""
 
-#: ./voteit/qr/views.py:318
+#: ./voteit/qr/views.py:314
 msgid "Already checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:333
+#: ./voteit/qr/views.py:329
 msgid "User is checked in"
 msgstr ""
 
-#: ./voteit/qr/views.py:336
+#: ./voteit/qr/views.py:332
 msgid "User is checked out"
 msgstr ""
 
-#: ./voteit/qr/views.py:346
+#: ./voteit/qr/views.py:342
 msgid "Checkout everyone - are you sure?"
 msgstr ""
 
-#: ./voteit/qr/views.py:359
+#: ./voteit/qr/views.py:355
 #, python-format
 msgid "Checked out ${num} users"
 msgstr ""
 
-#: ./voteit/qr/views.py:397
+#: ./voteit/qr/views.py:393
 msgid "QR codes"
 msgstr ""
 
-#: ./voteit/qr/views.py:398
+#: ./voteit/qr/views.py:394
 msgid "Checkin with QR codes."
 msgstr ""
 
-#: ./voteit/qr/views.py:405
+#: ./voteit/qr/views.py:401
 msgid "Settings"
 msgstr ""
 
-#: ./voteit/qr/views.py:411
+#: ./voteit/qr/views.py:407
 msgid "Register endpoint"
 msgstr ""
 
-#: ./voteit/qr/views.py:417
+#: ./voteit/qr/views.py:413
 msgid "Manual check-in"
 msgstr ""
 
-#: ./voteit/qr/views.py:423
+#: ./voteit/qr/views.py:419
 msgid "Show checked in users"
 msgstr ""
 
-#: ./voteit/qr/views.py:429 ./voteit/qr/templates/presence_log.pt:13
+#: ./voteit/qr/views.py:425 ./voteit/qr/templates/presence_log.pt:13
 msgid "Presence log"
 msgstr ""
 
@@ -225,6 +224,11 @@ msgstr ""
 #: ./voteit/qr/templates/checked_in_users.pt:26
 #: ./voteit/qr/templates/presence_log.pt:20
 msgid "Name"
+msgstr ""
+
+#: ./voteit/qr/templates/checked_in_users.pt:27
+#: ./voteit/qr/templates/presence_log.pt:21
+msgid "UserID"
 msgstr ""
 
 #: ./voteit/qr/templates/checked_in_users.pt:28
