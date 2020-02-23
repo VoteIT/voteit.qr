@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 import colander
-from arche.widgets import UserReferenceWidget
 from arche.security import principal_has_permisson
+from voteit.core.schemas.common import MeetingUserReferenceWidget
 from voteit.core.security import VIEW
 from voteit.irl.schemas import deferred_existing_participant_number_validator
 
@@ -53,7 +53,7 @@ class QRManualCheckin(colander.Schema):
     userid = colander.SchemaNode(
         colander.String(),
         title=_("User"),
-        widget=UserReferenceWidget(multiple=False),
+        widget=MeetingUserReferenceWidget(multiple=False),
         validator=UserCanViewMeeting,
         default=submitted_userid,
     )
