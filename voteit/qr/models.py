@@ -44,17 +44,18 @@ class PresenceQR(object):
     def _generate_random_secret(self, length=20):
         # type: (int) -> unicode
         chars = string.ascii_letters + string.digits
-        return ''.join(random.choice(chars) for x in range(length))
+        return "".join(random.choice(chars) for x in range(length))
 
     @property
     def active(self):
         return bool(self.secret)
+
     @active.setter
     def active(self, value):
-       if value and self.secret is None:
-           self.secret = self._generate_random_secret()
-       if not value and self.secret is not None:
-           del self.secret
+        if value and self.secret is None:
+            self.secret = self._generate_random_secret()
+        if not value and self.secret is not None:
+            del self.secret
 
     @property
     def userids(self):
@@ -71,6 +72,7 @@ class PresenceQR(object):
         except AttributeError:
             self.context._qr_presence_settings = OOBTree()
             return self.context._qr_presence_settings
+
     @settings.setter
     def settings(self, value):
         if dict(value) != dict(self.settings):
@@ -80,10 +82,12 @@ class PresenceQR(object):
     @property
     def secret(self):
         # type: () -> unicode or None
-        return getattr(self.context, '_qr_presence_secret', None)
+        return getattr(self.context, "_qr_presence_secret", None)
+
     @secret.setter
     def secret(self, value):
         self.context._qr_presence_secret = value
+
     @secret.deleter
     def secret(self):
         self.context._qr_presence_secret = None
@@ -91,7 +95,7 @@ class PresenceQR(object):
     def checkin(self, userid, request=None, event=True):
         """ Checkin user, returns userid or None if user was already checked in."""
         if userid not in self.userids:
-            logger.debug('%r checked in @ %r', userid, self.context.__name__)
+            logger.debug("%r checked in @ %r", userid, self.context.__name__)
             self.userids.add(userid)
             if event:
                 if not request:
@@ -99,12 +103,12 @@ class PresenceQR(object):
                 request.registry.notify(ParticipantCheckIn(userid, self.context))
             return userid
         else:
-            logger.debug('%r already checked in @ %r', userid, self.context.__name__)
+            logger.debug("%r already checked in @ %r", userid, self.context.__name__)
 
     def checkout(self, userid, request=None, event=True):
         """ Checkout user, returns userid or None if user was already checked out."""
         if userid in self.userids:
-            logger.debug('%r checked out @ %r', userid, self.context.__name__)
+            logger.debug("%r checked out @ %r", userid, self.context.__name__)
             self.userids.remove(userid)
             if event:
                 if not request:
@@ -112,7 +116,7 @@ class PresenceQR(object):
                 request.registry.notify(ParticipantCheckOut(userid, self.context))
             return userid
         else:
-            logger.debug('%r is not present @ %r', userid, self.context.__name__)
+            logger.debug("%r is not present @ %r", userid, self.context.__name__)
 
     def make_svg(self, payload, is_secret=True):
         # type: (dict) -> unicode
@@ -134,7 +138,7 @@ class PresenceQR(object):
         return jwt.encode(payload, self.secret)
 
     def __contains__(self, userid):
-        #Basically if someone has checked in
+        # Basically if someone has checked in
         return userid in self.userids
 
     def __iter__(self):
@@ -147,7 +151,6 @@ class PresenceQR(object):
 @implementer(IPresenceEventLog)
 @adapter(IMeeting)
 class PresenceEventLog(object):
-
     def __init__(self, context):
         self.context = context
 
@@ -164,16 +167,16 @@ class PresenceEventLog(object):
         # so we don't need to check for that
         if userid not in self:
             self[userid] = PersistentList()
-        if event_name == 'checkin':
-            self[userid].append({'in': utcnow()})
-        elif event_name == 'checkout':
+        if event_name == "checkin":
+            self[userid].append({"in": utcnow()})
+        elif event_name == "checkout":
             try:
-                self[userid][-1]['in']
+                self[userid][-1]["in"]
             except (KeyError, IndexError):
                 # in case logging was added while users where checked in, they won't exist
                 return
-            self[userid][-1]['out'] = utcnow()
-        else: # pragma: no coverage
+            self[userid][-1]["out"] = utcnow()
+        else:  # pragma: no coverage
             raise ValueError("Wrong event name")
 
     def total(self, userid):
@@ -182,19 +185,19 @@ class PresenceEventLog(object):
             return None
         total = timedelta()
         for item in self.get(userid, ()):
-            checkin = item['in']
-            checkout = item.get('out', utcnow())
+            checkin = item["in"]
+            checkout = item.get("out", utcnow())
             total += checkout - checkin
         return total
 
     def first_entry(self, userid):
         if userid in self:
-            return self[userid][0]['in']
+            return self[userid][0]["in"]
 
     def last_exit(self, userid):
         if userid in self:
             try:
-                return self[userid][-1]['out']
+                return self[userid][-1]["out"]
             except KeyError:
                 pass
 
@@ -221,12 +224,12 @@ def register_presence_event(event):
     """ Register events if that's switched on for this meeting. """
     meeting = event.meeting
     pqr = IPresenceQR(meeting)
-    if not pqr.settings.get('log_time', None):
+    if not pqr.settings.get("log_time", None):
         return
     if IParticipantCheckOut.providedBy(event):
-        event_name = 'checkout'
+        event_name = "checkout"
     elif IParticipantCheckIn.providedBy(event):
-        event_name = 'checkin'
+        event_name = "checkin"
     else:
         raise TypeError("Subscriber caught wrong event")
     log = IPresenceEventLog(meeting)
@@ -236,7 +239,7 @@ def register_presence_event(event):
 def assign_pn_if_user_lacks_one(event):
     meeting = event.meeting
     pqr = IPresenceQR(meeting)
-    if not pqr.settings.get('assign_pn', None):
+    if not pqr.settings.get("assign_pn", None):
         return
     pns = IParticipantNumbers(meeting)
     if event.userid not in pns.userid_to_number:
