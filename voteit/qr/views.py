@@ -449,13 +449,13 @@ def check_in_present_users_nav(context, request, va, **kw):
     mp = IMeetingPresence(request.meeting)
     if not mp.enabled:
         title = _("(Presence check not enabled)")
-        return """<li class="text-muted">%s</li>""" % title
+        return """<li class="text-muted">%s</li>""" % request.localizer.translate(title)
     if mp.open:
         title = _("Check in from open presence check")
     else:
         if not len(mp.present_userids):
             title = _("(No old presence check to use)")
-            return """<li class="text-muted">%s</li>""" % title
+            return """<li class="text-muted">%s</li>""" % request.localizer.translate(title)
         else:
             title = _("Check in from last archived presence check")
     return """<li><a href="%s">%s</a></li>""" % (
