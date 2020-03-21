@@ -19,6 +19,7 @@ from voteit.core import security
 from voteit.core.models.interfaces import IMeeting
 from voteit.core.views.control_panel import control_panel_category
 from voteit.core.views.control_panel import control_panel_link
+from voteit.irl.models.interfaces import IMeetingPresence
 from voteit.irl.models.interfaces import IParticipantNumbers
 from voteit.irl.models.participant_numbers import TicketAlreadyClaimedError
 from zope.interface.interfaces import ComponentLookupError
@@ -28,12 +29,15 @@ from voteit.qr.interfaces import IPresenceEventLog
 from voteit.qr import _
 
 
-@view_defaults(context=IMeeting)
-class QRViews(BaseView):
+class QRViewMixin(object):
 
     @reify
     def presence_qr(self):
         return self.request.registry.getAdapter(self.request.meeting, IPresenceQR)
+
+
+@view_defaults(context=IMeeting)
+class QRViews(BaseView, QRViewMixin):
 
     def get_payload(self):
         try:
@@ -196,14 +200,10 @@ class QRViews(BaseView):
              name="qr_settings",
              renderer="arche:templates/form.pt",
              permission=security.MODERATE_MEETING)
-class QRSettingsForm(DefaultEditForm):
+class QRSettingsForm(DefaultEditForm, QRViewMixin):
     schema_name = 'settings'
     type_name = 'QR'
     title = _("QR settings")
-
-    @reify
-    def presence_qr(self):
-       return IPresenceQR(self.context)
 
     def appstruct(self):
         appstruct = dict(self.presence_qr.settings)
@@ -227,11 +227,12 @@ class QRSettingsForm(DefaultEditForm):
         return HTTPFound(location=self.request.resource_url(self.context))
 
 
+
 @view_config(context=IMeeting,
              name="manual_checkin",
              renderer="voteit.qr:templates/manual_form.pt",
              permission=security.MODERATE_MEETING)
-class QRManualCheckin(DefaultEditForm):
+class QRManualCheckin(DefaultEditForm, QRViewMixin):
     schema_name = 'manual_checkin'
     type_name = 'QR'
     title = _("Manual checkin")
@@ -241,10 +242,6 @@ class QRManualCheckin(DefaultEditForm):
         Button('status', title=_("Status"), ),
     )
     session_key = 'qr.manual.checked_in'
-
-    @reify
-    def presence_qr(self):
-        return IPresenceQR(self.context)
 
     @reify
     def participant_numbers(self):
@@ -338,12 +335,8 @@ class QRManualCheckin(DefaultEditForm):
              name="_checkout_everyone",
              renderer="arche:templates/form.pt",
              permission=security.MODERATE_MEETING)
-class CheckoutEveryoneForm(DefaultEditForm):
+class CheckoutEveryoneForm(DefaultEditForm, QRViewMixin):
     title = _("Checkout everyone - are you sure?")
-
-    @reify
-    def presence_qr(self):
-        return IPresenceQR(self.context)
 
     def get_schema(self):
         return Schema()
@@ -384,6 +377,55 @@ def meeting_nav_link(context, request, va, **kw):
     return """<li><a data-open-modal href="%s">%s</a></li>""" % (url, request.localizer.translate(title))
 
 
+def check_in_present_users_nav(context, request, va, **kw):
+    mp = IMeetingPresence(request.meeting)
+    if not mp.enabled:
+        title = _("(Presence check not enabled)")
+        return """<li class="text-muted">%s</li>""" % title
+    if mp.open:
+        title = _("Check in from open presence check")
+    else:
+        if not len(mp.present_userids):
+            title = _("(No old presence check to use)")
+            return """<li class="text-muted">%s</li>""" % title
+        else:
+            title = _("Check in from last archived presence check")
+    return """<li><a href="%s">%s</a></li>""" % (
+        request.resource_url(request.meeting, va.kwargs['view_name']),
+        request.localizer.translate(title),
+    )
+
+
+@view_config(context=IMeeting,
+             name="_check_in_present_users",
+             permission=security.MODERATE_MEETING)
+class CheckInPresentUsers(BaseView, QRViewMixin):
+
+    def __call__(self):
+        mp = IMeetingPresence(self.context)
+        if not mp.enabled:
+            raise HTTPForbidden(_("Presence check not enabled for this meeting."))
+        if not len(mp.present_userids):
+            self.flash_messages.add(_("No users to check in", type="danger"))
+            return HTTPFound(location=self.request.resource_url(self.context))
+        already_handled = 0
+        checked_in = 0
+        for userid in tuple(mp.present_userids):
+            if userid in self.presence_qr:
+                already_handled += 1
+                continue
+            self.presence_qr.checkin(userid, request=self.request)
+            checked_in += 1
+        self.flash_messages.add(
+            _("checkin_from_presence_msg",
+              default="Checked in ${checked_in} user(s). Skipped ${already_handled} already handled.",
+              mapping={"already_handled": already_handled, "checked_in": checked_in}
+              ),
+            type=checked_in and "success" or "warning",
+        )
+        return HTTPFound(location=self.request.resource_url(self.context))
+
+
 def includeme(config):
     config.scan(__name__)
     config.add_view_action(
@@ -391,7 +433,7 @@ def includeme(config):
         'control_panel', 'qr',
         panel_group='control_panel_qr',
         title=_("QR codes"),
-        description=_("Checkin with QR codes."),
+        description=_("Checkin with QR codes, manually or with presence check if enabled."),
         permission=security.MODERATE_MEETING,
         check_active=_qr_codes_active,
     )
@@ -400,6 +442,11 @@ def includeme(config):
         'control_panel_qr', 'settings',
         title=_("Settings"),
         view_name='qr_settings',
+    )
+    config.add_view_action(
+        check_in_present_users_nav,
+        'control_panel_qr', 'check_in_present_users',
+        view_name='_check_in_present_users',
     )
     config.add_view_action(
         control_panel_link,
